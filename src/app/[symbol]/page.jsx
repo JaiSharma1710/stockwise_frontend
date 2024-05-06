@@ -74,10 +74,10 @@ const Detail = () => {
       <p className='mb-4 text-2xl font-bold'>{company}</p>
       {/* <div className="flex gap-4"> */}
       {/*  <Chart data={chartData} /> */}
-      <div className='flex flex-wrap w-1/2 gap-2'>
+      <div className='flex flex-wrap gap-2'>
         {ratios.map((ratio, index) => {
           return (
-            <div key={index} className='bg-gray-200 p-4 rounded w-[30%]'>
+            <div key={index} className='bg-gray-200 p-4 rounded w-full'>
               <p className='font-bold pb-4 text-center'>{ratio}</p>
               <div className='flex justify-evenly text-center gap-2'>
                 <div>
