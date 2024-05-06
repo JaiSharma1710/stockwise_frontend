@@ -2,32 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.global-search div input{
+width: 100%;
+border-radius: 0.5rem;
+padding: 1rem;
+height: 3rem;
+border: 1px solid black;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+#searchOptions::-webkit-scrollbar {
+    display: none;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+#searchOptions a .dropdown-item{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(245, 244, 244) !important;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+#searchOptions a .dropdown-item .name {
+    font-weight: bold;
+}
+
+#searchOptions a .dropdown-item .sector {
+    font-size: smaller;
+    font-weight: 300;
+}
+
+.dropdown-item.disabled{
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 1rem ;
 }
