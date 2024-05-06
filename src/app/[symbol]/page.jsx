@@ -11,7 +11,7 @@ const Detail = () => {
   const baseUrl = env_variables.base_api_url;
   const [ratioData, setRatioData] = useState({});
   const [company, setCompany] = useState('');
-  const [ratios,setRatios] = useState([])
+  const [ratios, setRatios] = useState([]);
 
   // const intraDayPromise = axios.get(
   //   `${baseUrl}/quote/intraday?symbol=${companySymbol}`
@@ -76,26 +76,19 @@ const Detail = () => {
       {/*  <Chart data={chartData} /> */}
       <div className='flex flex-wrap gap-2'>
         {ratios.map((ratio, index) => {
+          const years = Object.keys(ratioData[ratio]);
           return (
             <div key={index} className='bg-gray-200 p-4 rounded w-full'>
               <p className='font-bold pb-4 text-center'>{ratio}</p>
               <div className='flex justify-evenly text-center gap-2'>
-                <div>
-                  <p className='mb-4'>2024</p>
-                  <p>{ratioData[ratio]['2024-03-31T00:00:00+00:00']}</p>
-                </div>
-                <div>
-                  <p className='mb-4'>2023</p>
-                  <p>{ratioData[ratio]['2023-03-31T00:00:00+00:00']}</p>
-                </div>
-                <div>
-                  <p className='mb-4'>2022</p>
-                  <p>{ratioData[ratio]['2022-03-31T00:00:00+00:00']}</p>
-                </div>
-                <div>
-                  <p className='mb-4'>2021</p>
-                  <p>{ratioData[ratio]['2021-03-31T00:00:00+00:00']}</p>
-                </div>
+                {years.map((year, index) => {
+                  return (
+                    <div key={index}>
+                      <p className='mb-4'>{new Date(year).getFullYear()}</p>
+                      <p>{ratioData[ratio][year]}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );
