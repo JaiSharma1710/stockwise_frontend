@@ -13,7 +13,7 @@ const CustomChart = ({ data }) => {
 
   const primaryAxis = React.useMemo(
     () => ({
-      getValue: (datum) => datum.primary,
+      getValue: (datum) => datum?.primary,
     }),
     []
   );
@@ -21,11 +21,19 @@ const CustomChart = ({ data }) => {
   const secondaryAxes = React.useMemo(
     () => [
       {
-        getValue: (datum) => datum.secondary,
+        getValue: (datum) => datum?.secondary,
       },
     ],
     []
   );
+
+  if (!Array.isArray(data)) {
+    return (
+      <div className="w-1/2 h-[30rem] bg-gray-200 rounded-md flex justify-center items-center">
+        <p>Chart failed</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-1/2 h-[30rem] bg-gray-200 rounded-md flex justify-center items-center">
@@ -36,7 +44,7 @@ const CustomChart = ({ data }) => {
           data,
           primaryAxis,
           secondaryAxes,
-          defaultColors:['red']
+          defaultColors: ["red"],
         }}
       />
     </div>
