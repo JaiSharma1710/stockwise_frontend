@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-charts";
 
-const CustomChart = ({ data }) => {
+const CustomChart = ({ data, error }) => {
   const [showChart, setShowChart] = useState(false);
 
   useEffect(() => {
@@ -27,19 +27,19 @@ const CustomChart = ({ data }) => {
     []
   );
 
-  if (!Array.isArray(data)) {
+  if (!Array.isArray(data) || error) {
     return (
-      <div className="w-1/2 h-[30rem] bg-gray-200 rounded-md flex justify-center items-center">
+      <div className="w-full h-[30rem] bg-gray-100 rounded-md flex justify-center items-center">
         <p>Chart failed</p>
       </div>
     );
   }
 
   return (
-    <div className="w-1/2 h-[30rem] bg-gray-200 rounded-md flex justify-center items-center">
-      <p className={showChart ? `hidden` : "block"}>Loading...</p>
+    <div className="w-full h-[30rem] bg-gray-100 rounded-md flex justify-center items-center">
+      <p className={showChart ? 'hidden' : 'block'}>Loading...</p>
       <Chart
-        className={!showChart ? `hidden` : "block"}
+        className={!showChart ? 'hidden' : 'block'}
         options={{
           data,
           primaryAxis,

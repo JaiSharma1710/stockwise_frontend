@@ -56,7 +56,7 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
   const handleSelection = (selection) => {
     if (selection.length) {
       const { symbol } = selection?.[0];
-      redirect(symbol);
+      redirect(`company/${symbol}`);
     }
   };
 
