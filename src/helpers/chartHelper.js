@@ -1,6 +1,4 @@
-import CustomChart from "@/components/client/chart";
-
-const updateChartData = (chartData) => {
+export const updateChartData = (chartData) => {
   if (!chartData || !Array.isArray(chartData.grapthData)) {
     return;
   }
@@ -29,13 +27,3 @@ const updateChartData = (chartData) => {
     },
   ];
 };
-
-const RenderChart = ({ chartData, chartError }) => {
-  if (chartError || !chartData) {
-    return <CustomChart data={undefined} error={true} />;
-  }
-
-  return <CustomChart data={updateChartData(chartData)} error={false} />;
-};
-
-export default RenderChart;

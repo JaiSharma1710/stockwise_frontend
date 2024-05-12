@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Modal,
   ModalContent,
@@ -15,7 +15,7 @@ import { env_variables } from "@/config";
 
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
-const SearchInput = () => {
+const SearchInput = ({ className }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   function handleSearchfocus() {
@@ -27,9 +27,14 @@ const SearchInput = () => {
       <SeachModal {...{ isOpen, onOpen, onOpenChange }} />
       <div
         onClick={handleSearchfocus}
-        className="mt-4 bg-white mx-4 rounded p-2 border md:mx-0 hover:cursor-text md:mt-8 md:w-[35rem]"
+        className={
+          className ||
+          "mt-4 bg-white mx-4 rounded p-2 border md:mx-0 hover:cursor-text md:mt-8 md:w-[35rem]"
+        }
       >
-        <p className="text-gray-400">Search for a Company</p>
+        <p className="text-gray-400 text-sm lg:text-base">
+          Search for a Company
+        </p>
       </div>
     </>
   );
@@ -40,6 +45,7 @@ export default SearchInput;
 const SeachModal = ({ isOpen, onOpenChange }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
+  const router = useRouter();
 
   const handleSearch = async (query) => {
     setIsLoading(true);
@@ -56,7 +62,7 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
   const handleSelection = (selection) => {
     if (selection.length) {
       const { symbol } = selection?.[0];
-      redirect(`company/${symbol}`);
+      router.push(`/company/${symbol}`);
     }
   };
 
@@ -70,7 +76,7 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
       hideCloseButton={true}
     >
       <ModalContent>
-        {() => (
+        {(onClose) => (
           <>
             <ModalBody>
               <div className="h-96">
@@ -85,7 +91,10 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
                   size="lg"
                   onSearch={handleSearch}
                   options={options}
-                  onChange={handleSelection}
+                  onChange={(selection) => {
+                    onClose()
+                    handleSelection(selection);
+                  }}
                   placeholder="Search for a Company..."
                   renderMenuItemChildren={(option) => (
                     <div className="dropdown-item">

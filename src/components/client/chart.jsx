@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-charts";
 
-const CustomChart = ({ data, error }) => {
+const CustomChart = ({ isIncrease, data, error }) => {
   const [showChart, setShowChart] = useState(false);
 
   useEffect(() => {
@@ -29,24 +29,31 @@ const CustomChart = ({ data, error }) => {
 
   if (!Array.isArray(data) || error) {
     return (
-      <div className="w-full h-[30rem] bg-gray-100 rounded-md flex justify-center items-center">
+      <div className="w-full h-[30rem] bg-gray-50 rounded-md flex justify-center items-center">
         <p>Chart failed</p>
       </div>
     );
   }
 
+  const defaultColors = isIncrease ? ["green"] : ["red"];
+
   return (
-    <div className="w-full h-[30rem] bg-gray-100 rounded-md flex justify-center items-center">
-      <p className={showChart ? 'hidden' : 'block'}>Loading...</p>
-      <Chart
-        className={!showChart ? 'hidden' : 'block'}
-        options={{
-          data,
-          primaryAxis,
-          secondaryAxes,
-          defaultColors: ["red"],
-        }}
-      />
+    <div className="w-full h-52 lg:h-[30rem] bg-gray-50 rounded-md flex justify-center items-center">
+      <p className={showChart ? "hidden" : "block"}>Loading...</p>
+      <div
+        className={`w-full h-full flex justify-center items-center ${
+          isIncrease ? "bg-green-100" : "bg-red-100"
+        } ${!showChart ? "hidden" : "block"}`}
+      >
+        <Chart
+          options={{
+            data,
+            primaryAxis,
+            secondaryAxes,
+            defaultColors: defaultColors,
+          }}
+        />
+      </div>
     </div>
   );
 };

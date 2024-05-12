@@ -3,7 +3,9 @@ import axios from "axios";
 import { env_variables } from "@/config";
 
 import Ratios from "@/components/server/ratios";
-import RenderChart from "@/helpers/chartHelper";
+import RenderChart, { updateChartData } from "@/helpers/chartHelper";
+import CustomChart from "@/components/client/chart";
+import CompanyInfo from "@/components/server/companyInfo";
 
 const Detail = async ({ params }) => {
   const [companySymbol, exchange] = params.symbol.split(".") || [];
@@ -35,13 +37,19 @@ const Detail = async ({ params }) => {
   const ratioData = ratiosResponse.value?.data?.data;
 
   const companyError = companyResponse.status !== "fulfilled";
-  const companyData = companyResponse.value;
+  const companyData = companyResponse.value?.data?.data;
+
+  let isIncrease;
+
+  if(!companyError){
+    isIncrease = companyData.change > 0
+  }
 
   return (
-    <div className="w-full px-6 py-10">
-      <p className="mb-4 text-2xl font-bold">{companySymbol}</p>
+    <div className="w-full p-3 lg:px-6 lg:py-10">
       <div className="space-y-6">
-        <RenderChart chartData={chartData} chartError={chartError} />
+        <CompanyInfo data={companyData} error={companyError} />
+        <CustomChart isIncrease={isIncrease} data={updateChartData(chartData)} error={chartError} />
         <Ratios />
       </div>
     </div>
