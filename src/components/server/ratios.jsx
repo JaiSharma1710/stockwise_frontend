@@ -1,30 +1,81 @@
-import React from 'react'
+import React from "react";
 
-const Ratios = () => {
-  return (
-    <div>Ratios</div>
-  )
-}
+const Ratios = ({ ratioData, ratioError }) => {
+  try {
+    if (ratioError) {
+      throw new Error("error fetching ratio");
+    }
 
-export default Ratios
+    const ratios = Object.keys(ratioData);
+    const data = {};
 
-{/* <div className="flex flex-wrap gap-2">
-          {ratios.map((ratio, index) => {
-            const years = Object.keys(ratioData[ratio]);
+    ratios.forEach((ratio) => {
+      const value = ratioData[ratio];
+      Object.keys(value).forEach((year) => {
+        const ratioYear = new Date(year).getFullYear();
+        if (data[ratioYear]) {
+          data[ratioYear].push(value[year]);
+        } else {
+          data[ratioYear] = [value[year]];
+        }
+      });
+    });
+
+    return (
+      <div className="flex justify-between rounded-md overflow-hidden">
+        <div
+          id="ratios"
+          className="bg-gray-50 w-1/4 flex flex-col text-sm lg:text-base divide-y-2"
+        >
+          <p className="font-bold border-black border-b-2 p-2 lg:p-4">Ratio</p>
+          {ratios.map((ratio, index) => (
+            <p
+              className="w-full p-2 lg:p-4 text-xs lg:text-base whitespace-nowrap truncate"
+              key={index}
+            >
+              {ratio}
+            </p>
+          ))}
+        </div>
+
+        {Object.keys(data)
+          .reverse()
+          .map((year, index) => {
+            const dataForYear = data[year];
             return (
-              <div key={index} className="bg-gray-200 p-4 rounded w-full">
-                <p className="font-bold pb-4 text-center">{ratio}</p>
-                <div className="flex justify-evenly text-center gap-2">
-                  {years.map((year, index) => {
-                    return (
-                      <div key={index}>
-                        <p className="mb-4">{new Date(year).getFullYear()}</p>
-                        <p>{ratioData[ratio][year]}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+              <div
+                id={year}
+                key={index}
+                className={`${
+                  index % 2 === 0 ? "bg-gray-100" : "bg-gray-50"
+                } w-1/4 flex-col text-sm lg:text-base divide-y-2 text-center ${
+                  index === 3 ? "hidden lg:flex" : "flex"
+                }`}
+              >
+                <p className="font-bold border-black border-b-2 p-2 lg:p-4">
+                  {year}
+                </p>
+                {dataForYear.map((ratio, index) => (
+                  <p
+                    className="w-full text-xs lg:text-base p-2 lg:p-4"
+                    key={index}
+                  >
+                    {ratio || "-"}
+                  </p>
+                ))}
               </div>
             );
           })}
-        </div> */}
+      </div>
+    );
+  } catch (error) {
+    console.log(error.message);
+    return (
+      <div className="w-full bg-red-100 text-red-700 font-bold text-center py-4 rounded-md">
+        error fetching ratio data
+      </div>
+    );
+  }
+};
+
+export default Ratios;

@@ -2,7 +2,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
-import { useRouter } from "next/navigation";
 import {
   Modal,
   ModalContent,
@@ -45,7 +44,6 @@ export default SearchInput;
 const SeachModal = ({ isOpen, onOpenChange }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
-  const router = useRouter();
 
   const handleSearch = async (query) => {
     setIsLoading(true);
@@ -62,7 +60,7 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
   const handleSelection = (selection) => {
     if (selection.length) {
       const { symbol } = selection?.[0];
-      router.push(`/company/${symbol}`);
+      window.location = `/company/${symbol}`;
     }
   };
 
@@ -91,10 +89,7 @@ const SeachModal = ({ isOpen, onOpenChange }) => {
                   size="lg"
                   onSearch={handleSearch}
                   options={options}
-                  onChange={(selection) => {
-                    onClose()
-                    handleSelection(selection);
-                  }}
+                  onChange={handleSelection}
                   placeholder="Search for a Company..."
                   renderMenuItemChildren={(option) => (
                     <div className="dropdown-item">

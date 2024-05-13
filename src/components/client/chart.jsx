@@ -27,6 +27,14 @@ const CustomChart = ({ isIncrease, data, error }) => {
     []
   );
 
+  if (Array.isArray(data) && !data.length) {
+    return (
+      <div className="w-full h-[30rem] bg-gray-50 rounded-md flex justify-center items-center">
+        <p>Market is closed for now wait for some time</p>
+      </div>
+    );
+  }
+
   if (!Array.isArray(data) || error) {
     return (
       <div className="w-full h-[30rem] bg-gray-50 rounded-md flex justify-center items-center">
@@ -38,7 +46,7 @@ const CustomChart = ({ isIncrease, data, error }) => {
   const defaultColors = isIncrease ? ["green"] : ["red"];
 
   return (
-    <div className="w-full h-52 lg:h-[30rem] bg-gray-50 rounded-md flex justify-center items-center">
+    <div className="w-full h-52 lg:h-[30rem] bg-gray-50 overflow-hidden rounded-md flex justify-center items-center">
       <p className={showChart ? "hidden" : "block"}>Loading...</p>
       <div
         className={`w-full h-full flex justify-center items-center ${

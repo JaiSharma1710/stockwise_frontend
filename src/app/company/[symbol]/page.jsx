@@ -41,16 +41,20 @@ const Detail = async ({ params }) => {
 
   let isIncrease;
 
-  if(!companyError){
-    isIncrease = companyData.change > 0
+  if (!companyError) {
+    isIncrease = companyData.change > 0;
   }
 
   return (
     <div className="w-full p-3 lg:px-6 lg:py-10">
       <div className="space-y-6">
         <CompanyInfo data={companyData} error={companyError} />
-        <CustomChart isIncrease={isIncrease} data={updateChartData(chartData)} error={chartError} />
-        <Ratios />
+        <CustomChart
+          isIncrease={isIncrease}
+          data={updateChartData(chartData)}
+          error={chartError}
+        />
+        <Ratios ratioData={ratioData} ratioError={ratioError} />
       </div>
     </div>
   );
