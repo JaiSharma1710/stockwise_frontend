@@ -12,7 +12,7 @@ const Ratios = ({ ratioData, ratioError }) => {
     ratios.forEach((ratio) => {
       const value = ratioData[ratio];
       Object.keys(value).forEach((year) => {
-        const ratioYear = new Date(year).getFullYear();
+        const ratioYear = new Date(year).getFullYear() || year;
         if (data[ratioYear]) {
           data[ratioYear].push(value[year]);
         } else {
