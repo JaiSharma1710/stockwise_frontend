@@ -47,11 +47,13 @@ const Detail = async ({ params }) => {
 
   let performer = '';
 
-  if (ratioData.growth) {
-    if (ratioData.growth > 0) {
-      performer = 'Consider';
-    } else {
-      performer = 'Reject';
+  if (!ratioError) {
+    if (ratioData.growth) {
+      if (ratioData.growth > 0) {
+        performer = 'Consider';
+      } else {
+        performer = 'Reject';
+      }
     }
   }
 
@@ -64,20 +66,38 @@ const Detail = async ({ params }) => {
           data={updateChartData(chartData)}
           error={chartError}
         />
-        <Ratios ratioData={ratioData.companyData} ratioError={ratioError} />
+        <Ratios
+          ratioData={ratioData.companyData}
+          ratioError={ratioError}
+          heading='Time Series Analysis'
+        />
         <div className='flex justify-center items-center gap-10'>
           <div className='flex justify-center items-center gap-4'>
             <h1 className='font-bold text-2xl'>Growth:</h1>
-            <p className='font-bold text-2xl'>
+            <p
+              className={`font-bold text-2xl ${
+                performer === 'Reject' ? 'text-red-500' : 'text-green-500'
+              }`}
+            >
               {ratioData.growth ? `${ratioData.growth.toFixed(2)}%` : 'NA'}
             </p>
           </div>
           <div className='flex justify-center items-center gap-4'>
             <h1 className='font-bold text-2xl'>Recommendation:</h1>
-            <p className='font-bold text-2xl'>{performer}</p>
+            <p
+              className={`font-bold text-2xl ${
+                performer === 'Reject' ? 'text-red-500' : 'text-green-500'
+              }`}
+            >
+              {performer}
+            </p>
           </div>
         </div>
-        <Ratios ratioData={ratioData.dupointData} ratioError={ratioError} />
+        <Ratios
+          ratioData={ratioData.dupointData}
+          ratioError={ratioError}
+          heading='DuPont Analysis'
+        />
       </div>
     </div>
   );
