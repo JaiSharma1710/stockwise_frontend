@@ -1,14 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { env_variables } from '@/config';
+import { env_variables } from "@/config";
 
-import Ratios from '@/components/server/ratios';
-import RenderChart, { updateChartData } from '@/helpers/chartHelper';
-import CustomChart from '@/components/client/chart';
-import CompanyInfo from '@/components/server/companyInfo';
+import Ratios from "@/components/server/ratios";
+import RenderChart, { updateChartData } from "@/helpers/chartHelper";
+import CustomChart from "@/components/client/chart";
+import CompanyInfo from "@/components/server/companyInfo";
 
 const Detail = async ({ params }) => {
-  const [companySymbol, exchange] = params.symbol.split('.') || [];
+  const [companySymbol, exchange] = params.symbol.split(".") || [];
   const baseUrl = env_variables.base_api_url;
 
   const intraDayPromise = axios.get(
@@ -30,13 +30,13 @@ const Detail = async ({ params }) => {
       companyDataPromise,
     ]);
 
-  const chartError = intradayResponse.status !== 'fulfilled';
+  const chartError = intradayResponse.status !== "fulfilled";
   const chartData = intradayResponse.value?.data?.data;
 
-  const ratioError = ratiosResponse.status !== 'fulfilled';
+  const ratioError = ratiosResponse.status !== "fulfilled";
   const ratioData = ratiosResponse.value?.data?.data;
 
-  const companyError = companyResponse.status !== 'fulfilled';
+  const companyError = companyResponse.status !== "fulfilled";
   const companyData = companyResponse.value?.data?.data;
 
   let isIncrease;
@@ -45,21 +45,21 @@ const Detail = async ({ params }) => {
     isIncrease = companyData.change > 0;
   }
 
-  let performer = '';
+  let performer = "";
 
   if (!ratioError) {
     if (ratioData.growth) {
       if (ratioData.growth > 0) {
-        performer = 'Consider';
+        performer = "Consider";
       } else {
-        performer = 'Reject';
+        performer = "Reject";
       }
     }
   }
 
   return (
-    <div className='w-full p-3 lg:px-6 lg:py-10'>
-      <div className='space-y-6'>
+    <div className="w-full p-3 lg:px-6 lg:py-10">
+      <div className="space-y-6">
         <CompanyInfo data={companyData} error={companyError} />
         <CustomChart
           isIncrease={isIncrease}
@@ -69,24 +69,24 @@ const Detail = async ({ params }) => {
         <Ratios
           ratioData={ratioData.companyData}
           ratioError={ratioError}
-          heading='Time Series Analysis'
+          heading="Time Series Analysis"
         />
-        <div className='flex justify-center items-center gap-10'>
-          <div className='flex justify-center items-center gap-4'>
-            <h1 className='font-bold text-2xl'>Growth:</h1>
+        <div className="flex justify-center items-center gap-10">
+          <div className="flex justify-center items-center gap-4">
+            <h1 className="font-bold text-2xl">Growth:</h1>
             <p
               className={`font-bold text-2xl ${
-                performer === 'Reject' ? 'text-red-500' : 'text-green-500'
+                performer === "Reject" ? "text-red-500" : "text-green-500"
               }`}
             >
-              {ratioData.growth ? `${ratioData.growth.toFixed(2)}%` : 'NA'}
+              {ratioData.growth ? `${ratioData.growth.toFixed(2)}%` : "NA"}
             </p>
           </div>
-          <div className='flex justify-center items-center gap-4'>
-            <h1 className='font-bold text-2xl'>Recommendation:</h1>
+          <div className="flex justify-center items-center gap-4">
+            <h1 className="font-bold text-2xl">Recommendation:</h1>
             <p
               className={`font-bold text-2xl ${
-                performer === 'Reject' ? 'text-red-500' : 'text-green-500'
+                performer === "Reject" ? "text-red-500" : "text-green-500"
               }`}
             >
               {performer}
@@ -96,7 +96,17 @@ const Detail = async ({ params }) => {
         <Ratios
           ratioData={ratioData.dupointData}
           ratioError={ratioError}
-          heading='DuPont Analysis'
+          heading="DuPont Analysis"
+        />
+        <Ratios
+          ratioData={ratioData.balanceSheetRatios}
+          ratioError={ratioError}
+          heading="Balance Sheet"
+        />
+        <Ratios
+          ratioData={ratioData.incomStatementRatios}
+          ratioError={ratioError}
+          heading="Income Statement"
         />
       </div>
     </div>
