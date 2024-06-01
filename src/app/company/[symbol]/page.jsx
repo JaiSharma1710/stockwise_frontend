@@ -61,6 +61,42 @@ const Detail = async ({ params }) => {
     <div className="w-full p-3 lg:px-6 lg:py-10">
       <div className="space-y-6">
         <CompanyInfo data={companyData} error={companyError} />
+        <div className="flex gap-4 justify-between">
+          <div>
+            <div className="font-bold">Dividend Yield:</div>{" "}
+            {ratioData.basicInfoDataRatios?.dividendYield
+              ? `${ratioData.basicInfoDataRatios?.dividendYield * 100}%`
+              : "NA"}
+          </div>
+          <div>
+            <div className="font-bold">Market Cap:</div>{" "}
+            {ratioData.basicInfoDataRatios?.marketCap}
+          </div>
+          <div>
+            <div className="font-bold">52 Week Low:</div>{" "}
+            {ratioData.basicInfoDataRatios?.fiftyTwoWeekLow}
+          </div>
+          <div>
+            <div className="font-bold">52 Week High:</div>{" "}
+            {ratioData.basicInfoDataRatios?.fiftyTwoWeekHigh}
+          </div>
+          <div>
+            <div className="font-bold">EPS: </div>
+            {ratioData.basicInfoDataRatios?.trailingEps}
+          </div>
+          <div>
+            <div className="font-bold">Debt To Equity:</div>{" "}
+            {ratioData.basicInfoDataRatios?.debtToEquity}
+          </div>
+          <div>
+            <div className="font-bold">Current Ratio:</div>{" "}
+            {ratioData.basicInfoDataRatios?.currentRatio}
+          </div>
+          <div>
+            <div className="font-bold">EBITDA:</div>{" "}
+            {ratioData.basicInfoDataRatios?.ebitda}
+          </div>
+        </div>
         <CustomChart
           isIncrease={isIncrease}
           data={updateChartData(chartData)}
@@ -108,6 +144,22 @@ const Detail = async ({ params }) => {
           ratioError={ratioError}
           heading="Income Statement"
         />
+        <Ratios
+          ratioData={ratioData.cashflowDataRatios}
+          ratioError={ratioError}
+          heading="Cash Flow"
+        />
+
+        <div>
+          {Object.entries(ratioData.DCF_data).map((ele, index) => {
+            return (
+              <div className="flex gap-4 my-4" key={index}>
+                <p className="font-bold">{ele[0]} : </p>
+                <p>{ele[1]}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
