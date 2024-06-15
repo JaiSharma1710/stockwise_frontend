@@ -64,7 +64,7 @@ const Detail = async ({ params }) => {
         <div className="flex gap-4 justify-between">
           <div>
             <div className="font-bold">Dividend Yield:</div>{" "}
-            {ratioData.basicInfoDataRatios?.dividendYield
+            {ratioData?.basicInfoDataRatios?.dividendYield
               ? `${(ratioData.basicInfoDataRatios?.dividendYield * 100).toFixed(
                   2
                 )}%`
@@ -72,19 +72,19 @@ const Detail = async ({ params }) => {
           </div>
           <div>
             <div className="font-bold">Market Cap:</div>{" "}
-            {(ratioData.basicInfoDataRatios?.marketCap / 10000000).toFixed(2)} Cr.
+            {(ratioData?.basicInfoDataRatios?.marketCap / 10000000).toFixed(2)} Cr.
           </div>
           <div>
             <div className="font-bold">52 Week Low:</div>{" "}
-            {ratioData.basicInfoDataRatios?.fiftyTwoWeekLow}
+            {ratioData?.basicInfoDataRatios?.fiftyTwoWeekLow}
           </div>
           <div>
             <div className="font-bold">52 Week High:</div>{" "}
-            {ratioData.basicInfoDataRatios?.fiftyTwoWeekHigh}
+            {ratioData?.basicInfoDataRatios?.fiftyTwoWeekHigh}
           </div>
           <div>
             <div className="font-bold">EPS: </div>
-            {ratioData.basicInfoDataRatios?.trailingEps}
+            {ratioData?.basicInfoDataRatios?.trailingEps}
           </div>
         </div>
         <CustomChart
@@ -93,7 +93,7 @@ const Detail = async ({ params }) => {
           error={chartError}
         />
         <Ratios
-          ratioData={ratioData.companyData}
+          ratioData={ratioData?.companyData}
           ratioError={ratioError}
           heading="Time Series Analysis"
         />
@@ -105,7 +105,7 @@ const Detail = async ({ params }) => {
                 performer === "Reject" ? "text-red-500" : "text-green-500"
               }`}
             >
-              {ratioData.growth ? `${ratioData.growth.toFixed(2)}%` : "NA"}
+              {ratioData?.growth ? `${ratioData.growth.toFixed(2)}%` : "NA"}
             </p>
           </div>
           <div className="flex justify-center items-center gap-4">
@@ -120,22 +120,22 @@ const Detail = async ({ params }) => {
           </div>
         </div>
         <Ratios
-          ratioData={ratioData.dupointData}
+          ratioData={ratioData?.dupointData}
           ratioError={ratioError}
           heading="RoE Analysis"
         />
         <Ratios
-          ratioData={ratioData.balanceSheetRatios}
+          ratioData={ratioData?.balanceSheetRatios}
           ratioError={ratioError}
           heading="Balance Sheet"
         />
         <Ratios
-          ratioData={ratioData.incomStatementRatios}
+          ratioData={ratioData?.incomStatementRatios}
           ratioError={ratioError}
           heading="Income Statement"
         />
         <Ratios
-          ratioData={ratioData.cashflowDataRatios}
+          ratioData={ratioData?.cashflowDataRatios}
           ratioError={ratioError}
           heading="Cash Flow"
         />
