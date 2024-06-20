@@ -72,7 +72,8 @@ const Detail = async ({ params }) => {
           </div>
           <div>
             <div className="font-bold">Market Cap:</div>{" "}
-            {(ratioData?.basicInfoDataRatios?.marketCap / 10000000).toFixed(2)} Cr.
+            {(ratioData?.basicInfoDataRatios?.marketCap / 10000000).toFixed(2)}{" "}
+            Cr.
           </div>
           <div>
             <div className="font-bold">52 Week Low:</div>{" "}
@@ -124,6 +125,24 @@ const Detail = async ({ params }) => {
           ratioError={ratioError}
           heading="RoE Analysis"
         />
+        <div>
+          <p className="mb-4 py-6 text-center bg-gray-200 rounded-md font-bold text-4xl">
+            DCF Data
+          </p>
+
+          <div className="flex justify-evenly">
+            <p>DCF Price: {ratioData?.dcfData?.["DCF Price"] || ""}</p>
+
+            <p>
+              Recommendation: {ratioData?.dcfData?.["Recommendation"] || ""}
+            </p>
+
+            <p>
+              Overvalued/ Undervalued By:{" "}
+              {ratioData?.dcfData?.["Overvalued/ Undervalued By"] || ""}
+            </p>
+          </div>
+        </div>
         <Ratios
           ratioData={ratioData?.balanceSheetRatios}
           ratioError={ratioError}
