@@ -120,11 +120,6 @@ const Detail = async ({ params }) => {
             </p>
           </div>
         </div>
-        <Ratios
-          ratioData={ratioData?.dupointData}
-          ratioError={ratioError}
-          heading="RoE Analysis"
-        />
         <div>
           <p className="mb-4 py-6 text-center bg-gray-200 rounded-md font-bold text-4xl">
             DCF Valuation
@@ -140,7 +135,7 @@ const Detail = async ({ params }) => {
                     : "text-red-500 font-bold"
                 }
               >
-                {ratioData?.dcfData?.["DCF Price"] || ""}
+                Rs.{ratioData?.dcfData?.["DCF Price"] || ""}
               </span>
             </p>
 
@@ -171,6 +166,11 @@ const Detail = async ({ params }) => {
             </p>
           </div>
         </div>
+        <Ratios
+          ratioData={ratioData?.dupointData}
+          ratioError={ratioError}
+          heading="RoE Analysis"
+        />
         <Ratios
           ratioData={ratioData?.balanceSheetRatios}
           ratioError={ratioError}
