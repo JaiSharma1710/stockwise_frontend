@@ -96,7 +96,7 @@ const Detail = async ({ params }) => {
         <Ratios
           ratioData={ratioData?.companyData}
           ratioError={ratioError}
-          heading="Time Series Analysis"
+          heading="Weighted Time Series Analysis of Ratios"
         />
         <div className="flex justify-center items-center gap-10">
           <div className="flex justify-center items-center gap-4">
@@ -127,19 +127,47 @@ const Detail = async ({ params }) => {
         />
         <div>
           <p className="mb-4 py-6 text-center bg-gray-200 rounded-md font-bold text-4xl">
-            DCF Data
+            DCF Valuation
           </p>
 
           <div className="flex justify-evenly">
-            <p>DCF Price: {ratioData?.dcfData?.["DCF Price"] || ""}</p>
+            <p>
+              DCF Price:{" "}
+              <span
+                className={
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                    ? "text-green-500 font-bold"
+                    : "text-red-500 font-bold"
+                }
+              >
+                {ratioData?.dcfData?.["DCF Price"] || ""}
+              </span>
+            </p>
 
             <p>
-              Recommendation: {ratioData?.dcfData?.["Recommendation"] || ""}
+              Recommendation:{" "}
+              <span
+                className={
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                    ? "text-green-500 font-bold"
+                    : "text-red-500 font-bold"
+                }
+              >
+                {ratioData?.dcfData?.["Recommendation"] || ""}
+              </span>
             </p>
 
             <p>
               Overvalued/ Undervalued By:{" "}
-              {ratioData?.dcfData?.["Overvalued/ Undervalued By"] || ""}
+              <span
+                className={
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                    ? "text-green-500 font-bold"
+                    : "text-red-500 font-bold"
+                }
+              >
+                {ratioData?.dcfData?.["Overvalued/ Undervalued By"] || ""}
+              </span>
             </p>
           </div>
         </div>
