@@ -130,7 +130,7 @@ const Detail = async ({ params }) => {
               DCF Price:{" "}
               <span
                 className={
-                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued"
                     ? "text-green-500 font-bold"
                     : "text-red-500 font-bold"
                 }
@@ -143,7 +143,7 @@ const Detail = async ({ params }) => {
               Recommendation:{" "}
               <span
                 className={
-                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued"
                     ? "text-green-500 font-bold"
                     : "text-red-500 font-bold"
                 }
@@ -156,7 +156,7 @@ const Detail = async ({ params }) => {
               Overvalued/ Undervalued By:{" "}
               <span
                 className={
-                  ratioData?.dcfData?.["Recommendation"] === "Undervalued "
+                  ratioData?.dcfData?.["Recommendation"] === "Undervalued"
                     ? "text-green-500 font-bold"
                     : "text-red-500 font-bold"
                 }
